@@ -10,7 +10,6 @@ import java.time.format.DateTimeParseException;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
 
 public class Main {
     public static void main(String[] args) {
@@ -25,7 +24,7 @@ public class Main {
         String password = collectInput("Password: ", scanner);
         String dobString = collectInput("Date of Birth (yyyy-MM-dd): ", scanner);
 
-        String jwtToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb3NodWEiLCJpYXQiOjE2OTI3MjEwNTIsImV4cCI6MTY5MjcyNDY1Mn0.JDl6NVBjzmyGykJoiYdIzuhFhpWAAJ7fYyQ_fllbBTQ\n";
+        String jwtToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJKb3NodWEiLCJpYXQiOjE2OTI3Mjc4OTUsImV4cCI6MTY5MjczMTQ5NX0.igN31vYxgP6RnOwOH7edTmxCaKwKgAzqPZUp4hf5_Yo";
         String verificationStatus = verifyJWT(jwtToken);
         System.out.println("Verification status: " + verificationStatus);
 
@@ -49,6 +48,7 @@ public class Main {
         } else {
             // Handle validation failures...
         }
+
     }
 
     public static boolean allCriteriaMet(String username, String email, String password, String dobString) {
@@ -78,7 +78,7 @@ public class Main {
         if (!isValidPassword(password)) {
             validationFailures.add("Password must not be empty, and must be strong (1 uppercase, 1 special character, 1 number, 8 characters minimum).");
         }
-//
+
         if (!isValidDOB(dobString)) {
             validationFailures.add("Date of Birth must not be empty and the person should be at least 16 years old.");
         }
@@ -109,7 +109,6 @@ public class Main {
     }
 
     public static String generateJWT(String username) {
-        // Replace with your actual secret key
         String secretKey = "your&**&()(&&^%GGGGGJHFF((-secret-key";
 
         // Generate the JWT

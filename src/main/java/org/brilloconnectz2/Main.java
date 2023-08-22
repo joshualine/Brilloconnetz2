@@ -8,9 +8,15 @@ import java.util.regex.*;
 import java.time.*;
 import java.time.format.DateTimeParseException;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
+
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+
+
 
         // Collect input and validate...
 
@@ -18,6 +24,10 @@ public class Main {
         String email = collectInput("Email: ", scanner);
         String password = collectInput("Password: ", scanner);
         String dobString = collectInput("Date of Birth (yyyy-MM-dd): ", scanner);
+
+        String jwtToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb3NodWEiLCJpYXQiOjE2OTI3MjEwNTIsImV4cCI6MTY5MjcyNDY1Mn0.JDl6NVBjzmyGykJoiYdIzuhFhpWAAJ7fYyQ_fllbBTQ\n";
+        String verificationStatus = verifyJWT(jwtToken);
+        System.out.println("Verification status: " + verificationStatus);
 
         List<String> validationFailures = validateInputs(username, email, password, dobString);
 
@@ -111,5 +121,23 @@ public class Main {
                 .compact();
 
         return jwt;
+    }
+
+    public static String verifyJWT(String jwtToken) {
+        // Replace with your actual secret key
+        String secretKey = "your&**&()(&&^%GGGGGJHFF((-secret-key";
+
+        try {
+            Jws<Claims> claimsJws = Jwts.parserBuilder()
+                    .setSigningKey(secretKey.getBytes())
+                    .build()
+                    .parseClaimsJws(jwtToken);
+
+            // Successfully verified
+            return "verification pass";
+        } catch (Exception e) {
+            // Verification failed
+            return "verification fails";
+        }
     }
 }
